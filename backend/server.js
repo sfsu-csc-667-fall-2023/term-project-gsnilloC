@@ -1,13 +1,19 @@
+const createError = require("http-errors");
+const requestTime = require("./middleware/request-time")
+
 const path = require("path");
 const rootRoutes = require("./routes/root");
-const createError = require("http-errors");
-//const requestTime = require("./backend/middleware/request-time");
-
 
 const express = require("express");
 const app = express();
+app.set("views", path.join(__dirname, "backend", "views"));
+app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, "backend", "static")));
 
-//app.use(requestTime);
+
+app.use(requestTime);
+
+app.use(express.static(path.join(__dirname, "backend", "static")));
 
 app.use("/", rootRoutes);
 
